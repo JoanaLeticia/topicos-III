@@ -1,0 +1,182 @@
+INSERT INTO usuario (nome, email, senha, perfil) VALUES 
+('Admin Sistema', 'admin@email.com', 'SYu34Plo5KZGE9fMtUK9LRPnWC3WvVpogVg35bf5tPYMM6dxXNV6AWmPEQzOLc110uIwcv8TOigbaCB43f8KHQ==', 1), -- admin123
+('João Cliente', 'joao@email.com', 'SYu34Plo5KZGE9fMtUK9LRPnWC3WvVpogVg35bf5tPYMM6dxXNV6AWmPEQzOLc110uIwcv8TOigbaCB43f8KHQ==', 2), --admin123
+('Maria Cliente', 'maria@email.com', 'SYu34Plo5KZGE9fMtUK9LRPnWC3WvVpogVg35bf5tPYMM6dxXNV6AWmPEQzOLc110uIwcv8TOigbaCB43f8KHQ==', 2); -- 321
+
+INSERT INTO cliente (id) VALUES 
+(2),
+(3);
+
+INSERT INTO administrador (id, cpf, data_nascimento) VALUES 
+(1, '111.222.333-44', '1980-01-10');
+
+INSERT INTO estado (nome, sigla) VALUES 
+('Tocantins', 'TO'),
+('São Paulo', 'SP'),
+('Goiás', 'GO'),
+('Rio Grande do Sul', 'RS'),
+('Rio de Janeiro', 'RJ');
+
+INSERT INTO municipio (nome, estado_id) VALUES 
+('Porto Nacional', 1),
+('Goiânia', 3),
+('São Paulo', 2),
+('Palmas', 1),
+('Porto Alegre', 4);
+
+INSERT INTO endereco (logradouro, numero, complemento, bairro, cep, municipio_id, id_cliente) VALUES 
+('Rua Costa Silva Pereira', '1231', null, 'Setor Aeroporto', '77500-000', 1, 2),
+('Avenida Bandeirantes', '432', null, 'Vila Mariana', '74000-000', 2, 2),
+('Rua Anhenguera', '78312', null, 'Vila Nova', '49313-641', 3, 3),
+('Quadra 103 Sul', '15', 'Bloco A', 'Plano Diretor Sul', '77015-020', 4, 3);
+
+INSERT INTO telefone (codArea, numero, id_cliente) VALUES 
+('63', '984323854', 2),
+('99', '981453843', 3),
+('11', '992349812', 2),
+('61', '33445566', 3);
+
+-- ============================================
+-- 4. ITENS DO CARDÁPIO - ALMOÇO (20 itens)
+-- ============================================
+INSERT INTO itens_cardapio (id, nome, descricao, preco_base, periodo) VALUES
+-- Pratos principais
+(1, 'Filé à Parmegiana', 'Filé bovino empanado com molho de tomate e queijo gratinado', 45.90, 'ALMOCO'),
+(2, 'Frango Grelhado', 'Peito de frango grelhado com ervas finas', 32.90, 'ALMOCO'),
+(3, 'Picanha na Chapa', 'Picanha argentina grelhada com acompanhamentos', 58.90, 'ALMOCO'),
+(4, 'Peixe à Delícia', 'Filé de peixe ao molho de camarão', 42.90, 'ALMOCO'),
+(5, 'Bife Acebolado', 'Bife bovino com cebolas refogadas', 38.90, 'ALMOCO'),
+(6, 'Strogonoff de Frango', 'Strogonoff cremoso com batata palha', 36.90, 'ALMOCO'),
+(7, 'Lasanha à Bolonhesa', 'Lasanha com molho bolonhesa e queijo', 34.90, 'ALMOCO'),
+(8, 'Feijoada Completa', 'Feijoada tradicional com todos os acompanhamentos', 42.90, 'ALMOCO'),
+(9, 'Costela ao Barbecue', 'Costela suína ao molho barbecue', 46.90, 'ALMOCO'),
+(10, 'Tilápia Grelhada', 'Tilápia grelhada com legumes', 39.90, 'ALMOCO'),
+-- Massas
+(11, 'Espaguete à Carbonara', 'Massa ao molho carbonara com bacon', 33.90, 'ALMOCO'),
+(12, 'Penne ao Molho Branco', 'Penne com molho branco e frango', 32.90, 'ALMOCO'),
+(13, 'Nhoque ao Sugo', 'Nhoque de batata ao molho sugo', 29.90, 'ALMOCO'),
+-- Saladas e opções leves
+(14, 'Salada Caesar', 'Salada caesar com frango grelhado', 28.90, 'ALMOCO'),
+(15, 'Wrap de Frango', 'Wrap com frango, alface e molho especial', 26.90, 'ALMOCO'),
+-- Executivos
+(16, 'Executivo Carne', 'Arroz, feijão, bife, salada e batata frita', 24.90, 'ALMOCO'),
+(17, 'Executivo Frango', 'Arroz, feijão, frango grelhado, salada e legumes', 22.90, 'ALMOCO'),
+(18, 'Executivo Peixe', 'Arroz, feijão, peixe grelhado, salada e purê', 26.90, 'ALMOCO'),
+(19, 'Executivo Vegetariano', 'Arroz integral, feijão, legumes grelhados e salada', 21.90, 'ALMOCO'),
+(20, 'Marmitex Tradicional', 'Arroz, feijão, carne de panela, salada e farofa', 19.90, 'ALMOCO');
+
+-- ============================================
+-- 5. ITENS DO CARDÁPIO - JANTAR (20 itens)
+-- ============================================
+INSERT INTO itens_cardapio (id, nome, descricao, preco_base, periodo) VALUES
+-- Pratos sofisticados
+(21, 'Risoto de Camarão', 'Risoto cremoso com camarões grandes', 62.90, 'JANTAR'),
+(22, 'Salmão ao Molho de Maracujá', 'Salmão grelhado com molho de maracujá', 68.90, 'JANTAR'),
+(23, 'Medalhão ao Molho Madeira', 'Medalhão bovino ao molho madeira', 72.90, 'JANTAR'),
+(24, 'Bacalhau à Portuguesa', 'Bacalhau desfiado com batatas e azeitonas', 78.90, 'JANTAR'),
+(25, 'Filé Mignon ao Molho Gorgonzola', 'Filé mignon com molho gorgonzola', 69.90, 'JANTAR'),
+(26, 'Camarão à Grega', 'Camarões ao molho de tomate com queijo', 64.90, 'JANTAR'),
+(27, 'Polvo ao Vinagrete', 'Polvo grelhado com vinagrete especial', 82.90, 'JANTAR'),
+(28, 'Risoto de Cogumelos', 'Risoto com mix de cogumelos nobres', 58.90, 'JANTAR'),
+-- Massas Premium
+(29, 'Tagliatelle ao Funghi', 'Massa fresca com molho de funghi', 54.90, 'JANTAR'),
+(30, 'Ravióli de Queijos', 'Ravióli recheado com quatro queijos', 52.90, 'JANTAR'),
+(31, 'Fettuccine Alfredo', 'Fettuccine ao molho alfredo com frango', 49.90, 'JANTAR'),
+-- Carnes Premium
+(32, 'Picanha Premium', 'Picanha argentina 400g com acompanhamentos', 89.90, 'JANTAR'),
+(33, 'Cordeiro Assado', 'Carré de cordeiro com ervas', 95.90, 'JANTAR'),
+(34, 'Tournedor ao Molho de Vinho', 'Tournedor com molho de vinho tinto', 76.90, 'JANTAR'),
+-- Frutos do Mar
+(35, 'Moqueca de Peixe', 'Moqueca capixaba tradicional', 72.90, 'JANTAR'),
+(36, 'Lagosta Thermidor', 'Lagosta ao molho thermidor gratinado', 145.90, 'JANTAR'),
+-- Opções Leves
+(37, 'Carpaccio de Salmão', 'Salmão em fatias finas com alcaparras', 48.90, 'JANTAR'),
+(38, 'Salada Caprese Premium', 'Tomate, mussarela de búfala e manjericão', 38.90, 'JANTAR'),
+-- Pratos Especiais
+(39, 'Paella Valenciana', 'Paella tradicional com frutos do mar', 86.90, 'JANTAR'),
+(40, 'Duck Confit', 'Pato confitado com molho de laranja', 92.90, 'JANTAR');
+
+INSERT INTO sugestoes_chefe (id, data, item_almoco_id, item_jantar_id) VALUES
+(1, CURRENT_DATE, 6, 21);
+
+INSERT INTO parceiros_app (id, nome, percentual_comissao, taxa_fixa) VALUES
+(1, 'iFood', 15.00, 3.99),
+(2, 'Uber Eats', 18.00, 2.99),
+(3, 'Rappi', 12.00, 4.50),
+(4, 'Delivery Direto', 10.00, 5.00);
+
+INSERT INTO mesas (id, numero, capacidade) VALUES
+(1, 1, 2),
+(2, 2, 2),
+(3, 3, 4),
+(4, 4, 4),
+(5, 5, 4),
+(6, 6, 6),
+(7, 7, 6),
+(8, 8, 8),
+(9, 9, 8),
+(10, 10, 10);
+
+INSERT INTO atendimentos (id, tipo_atendimento, numero_mesa) VALUES
+(1, 'PRESENCIAL', 3),
+(2, 'PRESENCIAL', 5),
+(3, 'PRESENCIAL', 7);
+
+INSERT INTO atendimentos (id, tipo_atendimento, endereco_entrega_id, taxa_entrega) VALUES
+(4, 'DELIVERY_PROPRIO', 1, 5.00),
+(5, 'DELIVERY_PROPRIO', 2, 5.00),
+(6, 'DELIVERY_PROPRIO', 3, 5.00);
+
+INSERT INTO atendimentos (id, tipo_atendimento, endereco_entrega_id, parceiro_id) VALUES
+(7, 'DELIVERY_APLICATIVO', 1, 1),
+(8, 'DELIVERY_APLICATIVO', 2, 2),
+(9, 'DELIVERY_APLICATIVO', 4, 3);
+
+INSERT INTO pedidos (id, cliente_id, atendimento_id, status, data_pedido, periodo) VALUES
+-- Pedidos de Almoço
+(1, 2, 1, 'CONCLUIDO', CURRENT_TIMESTAMP - INTERVAL '5 hours', 'ALMOCO'), -- Presencial
+(2, 2, 4, 'CONCLUIDO', CURRENT_TIMESTAMP - INTERVAL '1 hours', 'ALMOCO'), -- Delivery Próprio com desconto (Sugestão do Chef)
+(3, 3, 2, 'EM_PREPARO', CURRENT_TIMESTAMP - INTERVAL '1 hour', 'ALMOCO'),
+(4, 3, 5, 'CONFIRMADO', CURRENT_TIMESTAMP - INTERVAL '30 minutes', 'ALMOCO'),
+-- Pedidos de Jantar
+(5, 2, 7, 'PENDENTE', CURRENT_TIMESTAMP, 'JANTAR'), -- Delivery App
+(6, 3, 3, 'CONCLUIDO', CURRENT_TIMESTAMP - INTERVAL '2 days', 'JANTAR'),
+(7, 2, 8, 'CONCLUIDO', CURRENT_TIMESTAMP - INTERVAL '3 days', 'JANTAR'),
+(8, 3, 6, 'CONCLUIDO', CURRENT_TIMESTAMP - INTERVAL '1 day', 'JANTAR');
+
+-- ============================================
+-- 12. RELACIONAMENTO PEDIDO <-> ITEM (N-N)
+-- ============================================
+-- Pedido 1 (Presencial - Almoço)
+INSERT INTO pedido_item (pedido_id, item_id) VALUES (1, 1), (1, 10); -- Filé Parmegiana + Tilápia
+
+-- Pedido 2 (Delivery Próprio - Almoço com desconto de Sugestão do Chef)
+INSERT INTO pedido_item (pedido_id, item_id) VALUES (2, 6); -- Strogonoff (Sugestão do Chef)
+
+-- Pedido 3 (Presencial - Almoço)
+INSERT INTO pedido_item (pedido_id, item_id) VALUES (3, 16), (3, 17); -- Executivo Carne + Executivo Frango
+
+-- Pedido 4 (Delivery Próprio - Almoço)
+INSERT INTO pedido_item (pedido_id, item_id) VALUES (4, 3), (4, 5); -- Picanha + Bife Acebolado
+
+-- Pedido 5 (Delivery App - Jantar)
+INSERT INTO pedido_item (pedido_id, item_id) VALUES (5, 21), (5, 22); -- Risoto de Camarão + Salmão
+
+-- Pedido 6 (Presencial - Jantar)
+INSERT INTO pedido_item (pedido_id, item_id) VALUES (6, 23), (6, 25); -- Medalhão + Filé ao Gorgonzola
+
+-- Pedido 7 (Delivery App - Jantar)
+INSERT INTO pedido_item (pedido_id, item_id) VALUES (7, 24), (7, 26); -- Bacalhau + Camarão à Grega
+
+-- Pedido 8 (Delivery Próprio - Jantar)
+INSERT INTO pedido_item (pedido_id, item_id) VALUES (8, 32), (8, 35); -- Picanha Premium + Moqueca
+
+-- ============================================
+-- 13. RESERVAS
+-- ============================================
+INSERT INTO reservas (id, usuario_id, mesa_id, data_hora, numero_pessoas, codigo_confirmacao) VALUES
+(1, 2, 6, CURRENT_DATE + INTERVAL '1 day' + TIME '19:30:00', 4, 'ABCD1234'),
+(2, 3, 8, CURRENT_DATE + INTERVAL '1 day' + TIME '20:00:00', 6, 'EFGH5678'),
+(3, 3, 10, CURRENT_DATE + INTERVAL '2 days' + TIME '19:00:00', 8, 'IJKL9012'),
+(4, 2, 3, CURRENT_DATE + INTERVAL '3 days' + TIME '20:30:00', 2, 'MNOP3456');
+
