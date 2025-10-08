@@ -34,4 +34,12 @@ public class ItemCardapioRepository implements PanacheRepository<ItemCardapio> {
     public List<ItemCardapio> findByPeriodoOrderByNome(TipoPeriodo periodo) {
         return find("periodo = ?1 ORDER BY nome ASC", periodo).list();
     }
+
+    public List<Double> findItemPrecoByPeriodo(TipoPeriodo periodo) {
+        return List.of(20.0, 30.0, 50.0, 75.0, 100.0);
+    }
+
+    public Object countByPeriodo(TipoPeriodo periodo) {
+        return count("periodo = ?1", periodo);
+    }
 }

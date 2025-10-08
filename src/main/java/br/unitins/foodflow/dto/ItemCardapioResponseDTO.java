@@ -9,22 +9,20 @@ public record ItemCardapioResponseDTO(
         String nome,
         String descricao,
         BigDecimal precoBase,
-        BigDecimal precoComDesconto, // Este campo será null se não houver desconto
+        BigDecimal precoComDesconto,
+        String nomeImagem,
         TipoPeriodo periodo,
         Boolean isSugestaoChefe
 ) {
-    // Este método é um atalho para quando não sabemos se é sugestão
     public static ItemCardapioResponseDTO valueOf(ItemCardapio item) {
         return valueOf(item, false);
     }
 
-    // Este é o método principal que usaremos
     public static ItemCardapioResponseDTO valueOf(ItemCardapio item, Boolean isSugestaoChefe) {
         if (item == null) {
             return null;
         }
 
-        // LÓGICA CORRIGIDA: Só calcula o preço com desconto se for a sugestão
         BigDecimal precoFinalComDesconto = isSugestaoChefe 
             ? item.calcularPrecoComDesconto() 
             : null;
@@ -34,7 +32,8 @@ public record ItemCardapioResponseDTO(
                 item.getNome(),
                 item.getDescricao(),
                 item.getPrecoBase(),
-                precoFinalComDesconto, // Usa o valor condicional
+                precoFinalComDesconto,
+                item.getNomeImagem(),
                 item.getPeriodo(),
                 isSugestaoChefe
         );

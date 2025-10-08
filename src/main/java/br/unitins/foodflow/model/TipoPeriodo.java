@@ -30,4 +30,23 @@ public enum TipoPeriodo {
         }
         return null;
      }
+
+     public static TipoPeriodo fromString(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            return null;
+        }
+        
+        // Tentar buscar pelo nome do enum (ALMOCO, JANTAR)
+        try {
+            return TipoPeriodo.valueOf(nome.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            // Se falhar, tentar pela descrição
+            for (TipoPeriodo tipo : values()) {
+                if (tipo.getNome().equalsIgnoreCase(nome)) {
+                    return tipo;
+                }
+            }
+            throw new IllegalArgumentException("Período inválido: " + nome);
+        }
+    }
 }

@@ -39,62 +39,62 @@ INSERT INTO telefone (codArea, numero, id_cliente) VALUES
 -- ============================================
 -- 4. ITENS DO CARDÁPIO - ALMOÇO (20 itens)
 -- ============================================
-INSERT INTO itens_cardapio (id, nome, descricao, preco_base, periodo) VALUES
+INSERT INTO itens_cardapio (id, nome, descricao, preco_base, periodo, nome_imagem) VALUES
 -- Pratos principais
-(1, 'Filé à Parmegiana', 'Filé bovino empanado com molho de tomate e queijo gratinado', 45.90, 'ALMOCO'),
-(2, 'Frango Grelhado', 'Peito de frango grelhado com ervas finas', 32.90, 'ALMOCO'),
-(3, 'Picanha na Chapa', 'Picanha argentina grelhada com acompanhamentos', 58.90, 'ALMOCO'),
-(4, 'Peixe à Delícia', 'Filé de peixe ao molho de camarão', 42.90, 'ALMOCO'),
-(5, 'Bife Acebolado', 'Bife bovino com cebolas refogadas', 38.90, 'ALMOCO'),
-(6, 'Strogonoff de Frango', 'Strogonoff cremoso com batata palha', 36.90, 'ALMOCO'),
-(7, 'Lasanha à Bolonhesa', 'Lasanha com molho bolonhesa e queijo', 34.90, 'ALMOCO'),
-(8, 'Feijoada Completa', 'Feijoada tradicional com todos os acompanhamentos', 42.90, 'ALMOCO'),
-(9, 'Costela ao Barbecue', 'Costela suína ao molho barbecue', 46.90, 'ALMOCO'),
-(10, 'Tilápia Grelhada', 'Tilápia grelhada com legumes', 39.90, 'ALMOCO'),
+(1, 'Filé à Parmegiana', 'Filé bovino empanado com molho de tomate e queijo gratinado', 45.90, 'ALMOCO', 'file-a-parmegiana.jpg'),
+(2, 'Frango Grelhado', 'Peito de frango grelhado com ervas finas', 32.90, 'ALMOCO', 'frango-grelhado.jpg'),
+(3, 'Picanha na Chapa', 'Picanha argentina grelhada com acompanhamentos', 58.90, 'ALMOCO', 'picanha-na-chapa.jpg'),
+(4, 'Peixe à Delícia', 'Filé de peixe ao molho de camarão', 42.90, 'ALMOCO', 'peixe-a-delicia.jpg'),
+(5, 'Bife Acebolado', 'Bife bovino com cebolas refogadas', 38.90, 'ALMOCO', 'bife-acebolado.jpg'),
+(6, 'Strogonoff de Frango', 'Strogonoff cremoso com batata palha', 36.90, 'ALMOCO', 'strogonoff-de-frango.jpg'),
+(7, 'Lasanha à Bolonhesa', 'Lasanha com molho bolonhesa e queijo', 34.90, 'ALMOCO', 'lasanha-bolonhesa.jpg'),
+(8, 'Feijoada Completa', 'Feijoada tradicional com todos os acompanhamentos', 42.90, 'ALMOCO', 'feijoada-completa.jpg'),
+(9, 'Costela ao Barbecue', 'Costela suína ao molho barbecue', 46.90, 'ALMOCO', 'costelinha-ao-barbecue.jpg'),
+(10, 'Tilápia Grelhada', 'Tilápia grelhada com legumes', 39.90, 'ALMOCO', 'tilapia-grelhada.jpg'),
 -- Massas
-(11, 'Espaguete à Carbonara', 'Massa ao molho carbonara com bacon', 33.90, 'ALMOCO'),
-(12, 'Penne ao Molho Branco', 'Penne com molho branco e frango', 32.90, 'ALMOCO'),
-(13, 'Nhoque ao Sugo', 'Nhoque de batata ao molho sugo', 29.90, 'ALMOCO'),
+(11, 'Espaguete à Carbonara', 'Massa ao molho carbonara com bacon', 33.90, 'ALMOCO', 'espaguete-a-carbonara.jpg'),
+(12, 'Penne ao Molho Branco', 'Penne com molho branco e frango', 32.90, 'ALMOCO', 'penne-ao-molho-branco.jpg'),
+(13, 'Nhoque ao Sugo', 'Nhoque de batata ao molho sugo', 29.90, 'ALMOCO', 'nhoque-ao-sugo.jpg'),
 -- Saladas e opções leves
-(14, 'Salada Caesar', 'Salada caesar com frango grelhado', 28.90, 'ALMOCO'),
-(15, 'Wrap de Frango', 'Wrap com frango, alface e molho especial', 26.90, 'ALMOCO'),
+(14, 'Salada Caesar', 'Salada caesar com frango grelhado', 28.90, 'ALMOCO', 'salada-caesar.jpg'),
+(15, 'Wrap de Frango', 'Wrap com frango, alface e molho especial', 26.90, 'ALMOCO', 'wrap-de-frango.jpg'),
 -- Executivos
-(16, 'Executivo Carne', 'Arroz, feijão, bife, salada e batata frita', 24.90, 'ALMOCO'),
-(17, 'Executivo Frango', 'Arroz, feijão, frango grelhado, salada e legumes', 22.90, 'ALMOCO'),
-(18, 'Executivo Peixe', 'Arroz, feijão, peixe grelhado, salada e purê', 26.90, 'ALMOCO'),
-(19, 'Executivo Vegetariano', 'Arroz integral, feijão, legumes grelhados e salada', 21.90, 'ALMOCO'),
-(20, 'Marmitex Tradicional', 'Arroz, feijão, carne de panela, salada e farofa', 19.90, 'ALMOCO');
+(16, 'Executivo Carne', 'Arroz, feijão, bife, salada e batata frita', 24.90, 'ALMOCO', 'executivo-carne.jpg'),
+(17, 'Executivo Frango', 'Arroz, feijão, frango grelhado, salada e legumes', 22.90, 'ALMOCO', 'executivo-frango.jpg'),
+(18, 'Executivo Peixe', 'Arroz, feijão, peixe grelhado, salada e purê', 26.90, 'ALMOCO', 'executivo-peixe.jpg'),
+(19, 'Executivo Vegetariano', 'Arroz integral, feijão, legumes grelhados e salada', 21.90, 'ALMOCO', 'executivo-vegetariano.jpg'),
+(20, 'Marmitex Tradicional', 'Arroz, feijão, carne de panela, salada e farofa', 19.90, 'ALMOCO', 'marmitex-tradicional.jpg');
 
 -- ============================================
 -- 5. ITENS DO CARDÁPIO - JANTAR (20 itens)
 -- ============================================
-INSERT INTO itens_cardapio (id, nome, descricao, preco_base, periodo) VALUES
+INSERT INTO itens_cardapio (id, nome, descricao, preco_base, periodo, nome_imagem) VALUES
 -- Pratos sofisticados
-(21, 'Risoto de Camarão', 'Risoto cremoso com camarões grandes', 62.90, 'JANTAR'),
-(22, 'Salmão ao Molho de Maracujá', 'Salmão grelhado com molho de maracujá', 68.90, 'JANTAR'),
-(23, 'Medalhão ao Molho Madeira', 'Medalhão bovino ao molho madeira', 72.90, 'JANTAR'),
-(24, 'Bacalhau à Portuguesa', 'Bacalhau desfiado com batatas e azeitonas', 78.90, 'JANTAR'),
-(25, 'Filé Mignon ao Molho Gorgonzola', 'Filé mignon com molho gorgonzola', 69.90, 'JANTAR'),
-(26, 'Camarão à Grega', 'Camarões ao molho de tomate com queijo', 64.90, 'JANTAR'),
-(27, 'Polvo ao Vinagrete', 'Polvo grelhado com vinagrete especial', 82.90, 'JANTAR'),
-(28, 'Risoto de Cogumelos', 'Risoto com mix de cogumelos nobres', 58.90, 'JANTAR'),
+(21, 'Risoto de Camarão', 'Risoto cremoso com camarões grandes', 62.90, 'JANTAR', 'risoto-camarao.jpg'),
+(22, 'Salmão ao Molho de Maracujá', 'Salmão grelhado com molho de maracujá', 68.90, 'JANTAR', 'salmao-ao-molho-de-maracuja.jpg'),
+(23, 'Medalhão ao Molho Madeira', 'Medalhão bovino ao molho madeira', 72.90, 'JANTAR', 'medalhao-ao-molho-madeira.jpg'),
+(24, 'Bacalhau à Portuguesa', 'Bacalhau desfiado com batatas e azeitonas', 78.90, 'JANTAR', 'bacalhau-a-portuguesa.jpg'),
+(25, 'Filé Mignon ao Molho Gorgonzola', 'Filé mignon com molho gorgonzola', 69.90, 'JANTAR', 'file-mignon-ao-molho-gorgonzola.jpg'),
+(26, 'Camarão à Grega', 'Camarões ao molho de tomate com queijo', 64.90, 'JANTAR', 'camarao-a-grega.jpg'),
+(27, 'Polvo ao Vinagrete', 'Polvo grelhado com vinagrete especial', 82.90, 'JANTAR', 'polvo-ao-vinagrete.jpg'),
+(28, 'Risoto de Cogumelos', 'Risoto com mix de cogumelos nobres', 58.90, 'JANTAR', 'risoto-de-cogumelos.jpg'),
 -- Massas Premium
-(29, 'Tagliatelle ao Funghi', 'Massa fresca com molho de funghi', 54.90, 'JANTAR'),
-(30, 'Ravióli de Queijos', 'Ravióli recheado com quatro queijos', 52.90, 'JANTAR'),
-(31, 'Fettuccine Alfredo', 'Fettuccine ao molho alfredo com frango', 49.90, 'JANTAR'),
+(29, 'Tagliatelle ao Funghi', 'Massa fresca com molho de funghi', 54.90, 'JANTAR', 'tagliatelle-ao-funghi.jpg'),
+(30, 'Ravióli de Queijos', 'Ravióli recheado com quatro queijos', 52.90, 'JANTAR', 'ravioli-de-queijos.jpg'),
+(31, 'Fettuccine Alfredo', 'Fettuccine ao molho alfredo com frango', 49.90, 'JANTAR', 'fettuccine-alfredo.jpg'),
 -- Carnes Premium
-(32, 'Picanha Premium', 'Picanha argentina 400g com acompanhamentos', 89.90, 'JANTAR'),
-(33, 'Cordeiro Assado', 'Carré de cordeiro com ervas', 95.90, 'JANTAR'),
-(34, 'Tournedor ao Molho de Vinho', 'Tournedor com molho de vinho tinto', 76.90, 'JANTAR'),
+(32, 'Picanha Premium', 'Picanha argentina 400g com acompanhamentos', 89.90, 'JANTAR', 'picanha-premium.jpg'),
+(33, 'Cordeiro Assado', 'Carré de cordeiro com ervas', 95.90, 'JANTAR', 'cordeiro-assado.jpg'),
+(34, 'Tournedor ao Molho de Vinho', 'Tournedor com molho de vinho tinto', 76.90, 'JANTAR', 'tournedor-ao-molho-de-vinho.jpg'),
 -- Frutos do Mar
-(35, 'Moqueca de Peixe', 'Moqueca capixaba tradicional', 72.90, 'JANTAR'),
-(36, 'Lagosta Thermidor', 'Lagosta ao molho thermidor gratinado', 145.90, 'JANTAR'),
+(35, 'Moqueca de Peixe', 'Moqueca capixaba tradicional', 72.90, 'JANTAR', 'moqueca-de-peixe.jpg'),
+(36, 'Lagosta Thermidor', 'Lagosta ao molho thermidor gratinado', 145.90, 'JANTAR', 'lagosta-thermidor.jpg'),
 -- Opções Leves
-(37, 'Carpaccio de Salmão', 'Salmão em fatias finas com alcaparras', 48.90, 'JANTAR'),
-(38, 'Salada Caprese Premium', 'Tomate, mussarela de búfala e manjericão', 38.90, 'JANTAR'),
+(37, 'Carpaccio de Salmão', 'Salmão em fatias finas com alcaparras', 48.90, 'JANTAR', 'carpaccio-de-salmao.jpg'),
+(38, 'Salada Caprese Premium', 'Tomate, mussarela de búfala e manjericão', 38.90, 'JANTAR', 'salada-carprese-premium.jpg'),
 -- Pratos Especiais
-(39, 'Paella Valenciana', 'Paella tradicional com frutos do mar', 86.90, 'JANTAR'),
-(40, 'Duck Confit', 'Pato confitado com molho de laranja', 92.90, 'JANTAR');
+(39, 'Paella Valenciana', 'Paella tradicional com frutos do mar', 86.90, 'JANTAR', 'paella-valenciana.jpg'),
+(40, 'Duck Confit', 'Pato confitado com molho de laranja', 92.90, 'JANTAR', 'duck-confit.jpg');
 
 INSERT INTO sugestoes_chefe (id, data, item_almoco_id, item_jantar_id) VALUES
 (1, CURRENT_DATE, 6, 21);
