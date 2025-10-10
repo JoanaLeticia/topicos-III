@@ -51,7 +51,6 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new EntityNotFoundException("Usuário não encontrado");
         }
 
-        // Verifica senha atual
         if (!hashService.verificarSenha(senhaAtual, usuario.getSenha())) {
             throw new SecurityException("Senha atual incorreta");
         }
@@ -80,27 +79,24 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<UsuarioResponseDTO> findAll(int page, int pageSize, String sort) {
-        // Campos permitidos para ordenação
         List<String> allowedSortFields = List.of("id", "nome", "email");
 
-        String orderByClause = "order by id"; // padrão
+        String orderByClause = "order by id";
 
         if (sort != null && !sort.isBlank()) {
             String[] sortParts = sort.trim().split(" ");
             String field = sortParts[0];
             String direction = (sortParts.length > 1) ? sortParts[1].toLowerCase() : "asc";
 
-            // Validar campo e direção
             if (allowedSortFields.contains(field)) {
                 if (direction.equals("desc") || direction.equals("asc")) {
                     orderByClause = String.format("order by %s %s", field, direction);
                 } else {
-                    orderByClause = String.format("order by %s", field); // padrão asc
+                    orderByClause = String.format("order by %s", field);
                 }
             }
         }
 
-        // Criar a consulta paginada com ordenação
         PanacheQuery<Usuario> panacheQuery = usuarioRepository.find(orderByClause);
 
         if (pageSize > 0) {
@@ -116,27 +112,24 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<UsuarioResponseDTO> findByNome(String nome, int page, int pageSize, String sort) {
-        // Campos permitidos para ordenação
         List<String> allowedSortFields = List.of("id", "nome", "email");
 
-        String orderByClause = "order by id"; // padrão
+        String orderByClause = "order by id";
 
         if (sort != null && !sort.isBlank()) {
             String[] sortParts = sort.trim().split(" ");
             String field = sortParts[0];
             String direction = (sortParts.length > 1) ? sortParts[1].toLowerCase() : "asc";
 
-            // Validar campo e direção
             if (allowedSortFields.contains(field)) {
                 if (direction.equals("desc") || direction.equals("asc")) {
                     orderByClause = String.format("order by %s %s", field, direction);
                 } else {
-                    orderByClause = String.format("order by %s", field); // padrão asc
+                    orderByClause = String.format("order by %s", field);
                 }
             }
         }
 
-        // Consulta com filtro LIKE para nome (insensível a maiúsculas)
         String jpql = "lower(nome) like lower(:nome) " + orderByClause;
 
         PanacheQuery<Usuario> panacheQuery = usuarioRepository

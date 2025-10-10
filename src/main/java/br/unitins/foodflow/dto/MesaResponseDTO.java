@@ -13,7 +13,7 @@ public record MesaResponseDTO(
         }
 
         return new MesaResponseDTO(
-                mesa.id,
+                mesa.getId(),
                 mesa.getNumero(),
                 mesa.getCapacidade()
         );

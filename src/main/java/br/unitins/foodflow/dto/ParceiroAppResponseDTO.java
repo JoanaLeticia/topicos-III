@@ -15,7 +15,7 @@ public record ParceiroAppResponseDTO(
         }
 
         return new ParceiroAppResponseDTO(
-                parceiro.id,
+                parceiro.getId(),
                 parceiro.getNome(),
                 parceiro.getPercentualComissao(),
                 parceiro.getTaxaFixa()

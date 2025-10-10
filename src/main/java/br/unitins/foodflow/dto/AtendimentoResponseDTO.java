@@ -7,9 +7,9 @@ public record AtendimentoResponseDTO(
         Long id,
         TipoAtendimento tipo,
         BigDecimal taxa,
-        Integer numeroMesa, // Para presencial
-        EnderecoResponseDTO enderecoEntrega, // Para delivery
-        ParceiroAppResponseDTO parceiro // Para delivery app
+        Integer numeroMesa,
+        EnderecoResponseDTO enderecoEntrega,
+        ParceiroAppResponseDTO parceiro
 ) {
     public static AtendimentoResponseDTO valueOf(Atendimento atendimento) {
         if (atendimento == null) {
@@ -30,7 +30,7 @@ public record AtendimentoResponseDTO(
         }
 
         return new AtendimentoResponseDTO(
-                atendimento.id,
+                atendimento.getId(),
                 atendimento.getTipo(),
                 atendimento.calcularTaxa(),
                 numeroMesa,

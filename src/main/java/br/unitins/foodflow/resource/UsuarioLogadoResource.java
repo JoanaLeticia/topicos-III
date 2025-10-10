@@ -52,7 +52,6 @@ public class UsuarioLogadoResource {
     @GET
     @RolesAllowed({ "Cliente", "Admin" })
     public Response getUsuario() {
-        // obtendo o login pelo token jwt
         String login = jwt.getSubject();
         LOG.infof("login: %s", login);
         try {

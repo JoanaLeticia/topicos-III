@@ -11,6 +11,6 @@ public interface SugestaoChefService {
     void delete(Long id);
     SugestaoChefResponseDTO findById(Long id);
     SugestaoChefResponseDTO findByData(LocalDate data);
-    SugestaoChefResponseDTO findSugestaoAtiva(); // Sugestão do dia atual
+    SugestaoChefResponseDTO findSugestaoAtiva();
     void deletarSugestoesAntigas(int diasAtras);
 }

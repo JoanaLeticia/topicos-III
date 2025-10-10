@@ -16,6 +16,7 @@ import jakarta.ws.rs.NotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,20 +46,17 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     @Transactional
     public PedidoResponseDTO create(PedidoDTO dto, String email) {
-        // Validar usuário
         Cliente cliente = clienteRepository.findByEmail(email);
         if (cliente == null) {
             throw new IllegalArgumentException("Cliente não encontrado para o email: " + email);
         }
 
-        // Criar pedido
         Pedido pedido = new Pedido();
         pedido.setCliente(cliente);
         pedido.setPeriodo(TipoPeriodo.valueOf(dto.idPeriodo()));
         pedido.setDataPedido(LocalDateTime.now());
         pedido.setStatus(StatusPedido.PENDENTE);
 
-        // Validar e adicionar itens
         if (dto.idsItens() == null || dto.idsItens().isEmpty()) {
             throw new BadRequestException("O pedido deve conter ao menos um item.");
         }
@@ -72,7 +70,6 @@ public class PedidoServiceImpl implements PedidoService {
                 throw new NotFoundException("Item com ID " + idItem + " não encontrado.");
             }
 
-            // REGRA: Validar se o item pertence ao período correto
             if (item.getPeriodo() != periodoEsperado) {
                 throw new BadRequestException(
                         "O item '" + item.getNome() + "' não pertence ao período de " +
@@ -83,16 +80,13 @@ public class PedidoServiceImpl implements PedidoService {
         }
         pedido.setItens(itens);
 
-        // Criar atendimento baseado no tipo
         Atendimento atendimento = criarAtendimento(dto);
         pedido.setAtendimento(atendimento);
 
-        // Calcular valor total (com desconto da Sugestão do Chefe)
         SugestaoChefe sugestaoAtiva = sugestaoRepository.findSugestaoAtiva();
         BigDecimal valorTotal = pedido.calcularValorTotal(sugestaoAtiva);
         pedido.setValorTotal(valorTotal);
 
-        // Persistir
         pedidoRepository.persist(pedido);
 
         return recalcularEConverterParaDTO(pedido);
@@ -104,10 +98,10 @@ public class PedidoServiceImpl implements PedidoService {
         switch (tipoAtendimento) {
             case PRESENCIAL:
                 AtendimentoPresencial presencial = new AtendimentoPresencial();
-                if (dto.numeroMesa() == null) {
-                    throw new BadRequestException("Número da mesa é obrigatório para atendimento presencial.");
+
+                if (dto.numeroMesa() != null) {
+                    presencial.setNumeroMesa(dto.numeroMesa());
                 }
-                presencial.setNumeroMesa(dto.numeroMesa());
                 return presencial;
 
             case DELIVERY_PROPRIO:
@@ -120,7 +114,7 @@ public class PedidoServiceImpl implements PedidoService {
                     throw new NotFoundException("Endereço não encontrado.");
                 }
                 deliveryProprio.setEnderecoEntrega(enderecoProprio);
-                deliveryProprio.setTaxaEntrega(new BigDecimal("5.00")); // Taxa fixa padrão
+                deliveryProprio.setTaxaEntrega(new BigDecimal("5.00"));
                 return deliveryProprio;
 
             case DELIVERY_APLICATIVO:
@@ -156,15 +150,12 @@ public class PedidoServiceImpl implements PedidoService {
             throw new NotFoundException("Pedido com ID " + id + " não encontrado.");
         }
 
-        // Só permite atualizar pedidos pendentes
         if (pedido.getStatus() != StatusPedido.PENDENTE) {
             throw new BadRequestException("Apenas pedidos pendentes podem ser editados.");
         }
 
-        // Atualizar período
         pedido.setPeriodo(TipoPeriodo.valueOf(dto.idPeriodo()));
 
-        // Atualizar itens
         if (dto.idsItens() != null && !dto.idsItens().isEmpty()) {
             List<ItemCardapio> itens = new ArrayList<>();
             TipoPeriodo periodoEsperado = pedido.getPeriodo();
@@ -184,7 +175,6 @@ public class PedidoServiceImpl implements PedidoService {
             pedido.setItens(itens);
         }
 
-        // Recalcular valor total
         SugestaoChefe sugestaoAtiva = sugestaoRepository.findSugestaoAtiva();
         BigDecimal valorTotal = pedido.calcularValorTotal(sugestaoAtiva);
         pedido.setValorTotal(valorTotal);
@@ -200,7 +190,6 @@ public class PedidoServiceImpl implements PedidoService {
             throw new NotFoundException("Pedido com ID " + id + " não encontrado.");
         }
 
-        // Validar transição de status
         validarTransicaoStatus(pedido.getStatus(), novoStatus);
 
         pedido.setStatus(novoStatus);
@@ -208,26 +197,25 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     private void validarTransicaoStatus(StatusPedido statusAtual, StatusPedido novoStatus) {
-        // Regras de transição de status
         if (statusAtual == StatusPedido.CANCELADO || statusAtual == StatusPedido.CONCLUIDO) {
             throw new BadRequestException("Não é possível alterar o status de um pedido " +
                     statusAtual.name().toLowerCase() + ".");
         }
 
         if (statusAtual == StatusPedido.PENDENTE && novoStatus == StatusPedido.EM_PREPARO) {
-            return; // Válido
+            return;
         }
         if (statusAtual == StatusPedido.PENDENTE && novoStatus == StatusPedido.CONFIRMADO) {
-            return; // Válido
+            return;
         }
         if (statusAtual == StatusPedido.CONFIRMADO && novoStatus == StatusPedido.EM_PREPARO) {
-            return; // Válido
+            return;
         }
         if (statusAtual == StatusPedido.EM_PREPARO && novoStatus == StatusPedido.CONCLUIDO) {
-            return; // Válido
+            return;
         }
         if (novoStatus == StatusPedido.CANCELADO) {
-            return; // Sempre pode cancelar (exceto se já concluído/cancelado)
+            return;
         }
 
         throw new BadRequestException("Transição de status inválida: " +
@@ -242,7 +230,6 @@ public class PedidoServiceImpl implements PedidoService {
             throw new NotFoundException("Pedido não encontrado.");
         }
 
-        // Só permite deletar pedidos pendentes ou cancelados
         if (pedido.getStatus() != StatusPedido.PENDENTE &&
                 pedido.getStatus() != StatusPedido.CANCELADO) {
             throw new BadRequestException("Apenas pedidos pendentes ou cancelados podem ser deletados.");
@@ -267,7 +254,6 @@ public class PedidoServiceImpl implements PedidoService {
         if (pedido == null) {
             throw new NotFoundException("Pedido não encontrado.");
         }
-        // Usa o método auxiliar para recalcular e converter
         return recalcularEConverterParaDTO(pedido);
     }
 
@@ -363,7 +349,6 @@ public class PedidoServiceImpl implements PedidoService {
             throw new EntityNotFoundException("Cliente não encontrado");
         }
 
-        // Correção: usar a sintaxe correta do Panache para ordenação
         Pedido ultimoPedido = pedidoRepository.find("cliente", Sort.descending("dataHora"), cliente)
                 .firstResult();
 
@@ -372,5 +357,23 @@ public class PedidoServiceImpl implements PedidoService {
         }
 
         return recalcularEConverterParaDTO(ultimoPedido);
+    }
+
+    @Override
+    public List<PedidoResponseDTO> findByClienteEmail(String email) {
+        Cliente cliente = clienteRepository.findByEmail(email);
+        if (cliente == null) {
+            throw new EntityNotFoundException("Cliente não encontrado.");
+        }
+
+        List<Pedido> pedidos = pedidoRepository.findByCliente(cliente);
+        if (pedidos == null || pedidos.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        // Usamos o método auxiliar que já recalcula os totais
+        return pedidos.stream()
+                .map(this::recalcularEConverterParaDTO)
+                .collect(Collectors.toList());
     }
 }

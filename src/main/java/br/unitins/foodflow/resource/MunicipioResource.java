@@ -146,7 +146,6 @@ public class MunicipioResource {
     @Transactional
     public Response apagar(@PathParam("id") Long id) {
         try {
-            // Primeiro verifica se o município existe
             Municipio municipio = municipioRepository.findById(id);
             if (municipio == null) {
                 return Response.status(Status.NOT_FOUND)
@@ -154,7 +153,6 @@ public class MunicipioResource {
                         .build();
             }
 
-            // Verifica se há endereços vinculados
             Long countEnderecos = enderecoRepository.count("municipio", municipio);
             if (countEnderecos > 0) {
                 return Response.status(Status.CONFLICT)

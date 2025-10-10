@@ -46,7 +46,6 @@ public class PedidoRepository implements PanacheRepository<Pedido> {
                 tipoAtendimento, inicio, fim).list();
     }
 
-    // Para relatórios
     public List<Object[]> findFaturamentoPorTipoAtendimento(LocalDateTime inicio, LocalDateTime fim) {
         return getEntityManager()
                 .createQuery(
@@ -96,5 +95,9 @@ public class PedidoRepository implements PanacheRepository<Pedido> {
 
     public long countByClienteId(Long clienteId) {
         return count("cliente.id", clienteId);
+    }
+
+    public List<Pedido> findByCliente(Cliente cliente) {
+        return find("cliente", cliente).list();
     }
 }

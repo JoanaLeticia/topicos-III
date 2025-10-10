@@ -11,7 +11,7 @@ public record ReservaDTO(
         @JsonProperty(required = true) 
         @NotNull(message = "O campo data/hora não pode ser nulo.") 
         @Future(message = "A reserva deve ser para uma data futura.")
-        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
         LocalDateTime dataHora,
         
         @NotNull(message = "O campo mesa não pode ser nulo.") 

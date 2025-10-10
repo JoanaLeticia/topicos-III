@@ -56,4 +56,8 @@ public class Telefone {
         this.cliente = cliente;
     }
 
+    public String getNumeroCompleto() {
+        return "(" + this.codArea + ") " + this.numero;
+    }
+
 }

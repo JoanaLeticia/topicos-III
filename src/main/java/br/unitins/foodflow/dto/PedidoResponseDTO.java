@@ -3,7 +3,7 @@ package br.unitins.foodflow.dto;
 import br.unitins.foodflow.model.ItemCardapio;
 import br.unitins.foodflow.model.Pedido;
 import br.unitins.foodflow.model.StatusPedido;
-import br.unitins.foodflow.model.SugestaoChefe; // Importe a SugestaoChefe
+import br.unitins.foodflow.model.SugestaoChefe;
 import br.unitins.foodflow.model.TipoPeriodo;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -24,12 +24,10 @@ public record PedidoResponseDTO(
         BigDecimal taxaEntrega,
         BigDecimal valorTotal
 ) {
-    // Método valueOf antigo para manter a compatibilidade onde não há sugestão
     public static PedidoResponseDTO valueOf(Pedido pedido) {
         return valueOf(pedido, null);
     }
 
-    // Método principal e corrigido
     public static PedidoResponseDTO valueOf(Pedido pedido, SugestaoChefe sugestaoDoDia) {
         if (pedido == null) {
             return null;
@@ -38,7 +36,6 @@ public record PedidoResponseDTO(
         BigDecimal subtotalCorreto = BigDecimal.ZERO;
         List<ItemCardapioResponseDTO> itensDTO = new ArrayList<>();
 
-        // Itera sobre os itens para calcular o subtotal E criar a lista de DTOs
         for (ItemCardapio item : pedido.getItens()) {
             boolean isSugestao = sugestaoDoDia != null && sugestaoDoDia.isItemSugestao(item, pedido.getPeriodo());
 
@@ -47,7 +44,6 @@ public record PedidoResponseDTO(
             } else {
                 subtotalCorreto = subtotalCorreto.add(item.getPrecoBase());
             }
-            // Cria o DTO do item já com a flag e o preço com desconto corretos
             itensDTO.add(ItemCardapioResponseDTO.valueOf(item, isSugestao));
         }
 
@@ -57,24 +53,23 @@ public record PedidoResponseDTO(
 
         BigDecimal valorTotalCorreto = subtotalCorreto.add(taxaEntrega);
 
-        // O resto da lógica de busca de dados do cliente permanece a mesma
         Long idCliente = (pedido.getCliente() != null) ? pedido.getCliente().getId() : null;
         String nomeCliente = (pedido.getCliente() != null) ? pedido.getCliente().getNome() : null;
         String emailCliente = (pedido.getCliente() != null) ? pedido.getCliente().getEmail() : null;
 
         return new PedidoResponseDTO(
-                pedido.id,
+                pedido.getId(),
                 idCliente,
                 nomeCliente,
                 emailCliente,
-                itensDTO, // Usa a nova lista de DTOs
+                itensDTO,
                 AtendimentoResponseDTO.valueOf(pedido.getAtendimento()),
                 pedido.getStatus(),
                 pedido.getDataPedido(),
                 pedido.getPeriodo(),
-                subtotalCorreto,    // Usa o subtotal correto
+                subtotalCorreto,
                 taxaEntrega,
-                valorTotalCorreto   // Usa o valor total correto
+                valorTotalCorreto
         );
     }
 }

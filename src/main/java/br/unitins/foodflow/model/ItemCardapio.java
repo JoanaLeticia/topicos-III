@@ -2,16 +2,21 @@ package br.unitins.foodflow.model;
 
 import java.math.BigDecimal;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "itens_cardapio")
-public class ItemCardapio extends PanacheEntity {
+public class ItemCardapio {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String nome;
@@ -71,6 +76,14 @@ public class ItemCardapio extends PanacheEntity {
 
     public void setPeriodo(TipoPeriodo periodo) {
         this.periodo = periodo;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

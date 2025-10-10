@@ -27,7 +27,6 @@ public class SugestaoChefServiceImpl implements SugestaoChefService {
     @Override
     @Transactional
     public SugestaoChefResponseDTO create(SugestaoChefDTO dto) {
-        // Validar se já existe sugestão para a data
         if (sugestaoRepository.existsByData(dto.data())) {
             throw new BadRequestException("Já existe uma sugestão para a data " + dto.data());
         }
@@ -35,7 +34,6 @@ public class SugestaoChefServiceImpl implements SugestaoChefService {
         SugestaoChefe sugestao = new SugestaoChefe();
         sugestao.setData(dto.data());
 
-        // Validar e associar item do almoço
         if (dto.idItemAlmoco() != null) {
             ItemCardapio itemAlmoco = itemRepository.findById(dto.idItemAlmoco());
             if (itemAlmoco == null) {
@@ -47,7 +45,6 @@ public class SugestaoChefServiceImpl implements SugestaoChefService {
             sugestao.setItemAlmoco(itemAlmoco);
         }
 
-        // Validar e associar item do jantar
         if (dto.idItemJantar() != null) {
             ItemCardapio itemJantar = itemRepository.findById(dto.idItemJantar());
             if (itemJantar == null) {
@@ -59,7 +56,6 @@ public class SugestaoChefServiceImpl implements SugestaoChefService {
             sugestao.setItemJantar(itemJantar);
         }
 
-        // Validar se pelo menos um item foi informado
         if (sugestao.getItemAlmoco() == null && sugestao.getItemJantar() == null) {
             throw new BadRequestException("Pelo menos um item (almoço ou jantar) deve ser informado.");
         }
@@ -76,7 +72,6 @@ public class SugestaoChefServiceImpl implements SugestaoChefService {
             throw new NotFoundException("Sugestão com ID " + id + " não encontrada.");
         }
 
-        // Verificar se a data foi alterada e se já existe sugestão para a nova data
         if (!sugestao.getData().equals(dto.data())) {
             if (sugestaoRepository.existsByData(dto.data())) {
                 throw new BadRequestException("Já existe uma sugestão para a data " + dto.data());
@@ -84,7 +79,6 @@ public class SugestaoChefServiceImpl implements SugestaoChefService {
             sugestao.setData(dto.data());
         }
 
-        // Atualizar item do almoço
         if (dto.idItemAlmoco() != null) {
             ItemCardapio itemAlmoco = itemRepository.findById(dto.idItemAlmoco());
             if (itemAlmoco == null) {
@@ -98,7 +92,6 @@ public class SugestaoChefServiceImpl implements SugestaoChefService {
             sugestao.setItemAlmoco(null);
         }
 
-        // Atualizar item do jantar
         if (dto.idItemJantar() != null) {
             ItemCardapio itemJantar = itemRepository.findById(dto.idItemJantar());
             if (itemJantar == null) {

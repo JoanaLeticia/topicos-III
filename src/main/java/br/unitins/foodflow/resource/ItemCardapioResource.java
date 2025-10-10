@@ -9,11 +9,7 @@ import br.unitins.foodflow.repository.ItemCardapioRepository;
 import br.unitins.foodflow.service.FileService;
 import br.unitins.foodflow.service.ItemCardapioService;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
-import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.Consumes;
@@ -57,7 +53,7 @@ public class ItemCardapioResource {
     private static final Logger LOG = Logger.getLogger(ItemCardapioResource.class);
 
     @POST
-    @RolesAllowed({ "Admin" }) // Ajuste conforme suas roles
+    @RolesAllowed({ "Admin" })
     public Response create(@Valid ItemCardapioDTO dto) {
         ItemCardapioResponseDTO response = itemService.create(dto);
         return Response.status(Response.Status.CREATED).entity(response).build();

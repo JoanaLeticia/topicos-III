@@ -5,6 +5,7 @@ import java.util.List;
 import br.unitins.foodflow.dto.ClienteDTO;
 import br.unitins.foodflow.dto.ClienteResponseDTO;
 import br.unitins.foodflow.dto.ClienteUpdateDTO;
+import br.unitins.foodflow.dto.EnderecoResponseDTO;
 import br.unitins.foodflow.dto.UsuarioResponseDTO;
 
 public interface ClienteService {
@@ -20,4 +21,5 @@ public interface ClienteService {
     long count(String nome);
     public UsuarioResponseDTO login(String email, String senha);
     ClienteResponseDTO findByEmail(String email);
+    List<EnderecoResponseDTO> findEnderecosByEmail(String email);
 }

@@ -1,5 +1,6 @@
 package br.unitins.foodflow.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 import br.unitins.foodflow.dto.ClienteDTO;
 import br.unitins.foodflow.dto.ClienteResponseDTO;
 import br.unitins.foodflow.dto.ClienteUpdateDTO;
+import br.unitins.foodflow.dto.EnderecoResponseDTO;
 import br.unitins.foodflow.dto.TelefoneDTO;
 import br.unitins.foodflow.dto.UsuarioResponseDTO;
 import br.unitins.foodflow.model.Cliente;
@@ -58,7 +60,28 @@ public class ClienteServiceImpl implements ClienteService {
             novoCliente.setTelefones(telefones);
         }
 
-        novoCliente.setEnderecos(null);
+        if (cliente.listaEndereco() != null && !cliente.listaEndereco().isEmpty()) {
+            List<Endereco> enderecos = cliente.listaEndereco().stream()
+                    .map(end -> {
+                        Endereco endereco = new Endereco();
+                        endereco.setLogradouro(end.logradouro());
+                        endereco.setNumero(end.numero());
+                        endereco.setComplemento(end.complemento());
+                        endereco.setBairro(end.bairro());
+                        endereco.setCep(end.cep());
+
+                        Municipio municipio = municipioRepository.findById(end.idMunicipio());
+                        if (municipio == null) {
+                            throw new EntityNotFoundException(
+                                    "Município com ID " + end.idMunicipio() + " não encontrado.");
+                        }
+                        endereco.setMunicipio(municipio);
+
+                        endereco.setCliente(novoCliente);
+                        return endereco;
+                    }).collect(Collectors.toList());
+            novoCliente.setEnderecos(enderecos);
+        }
 
         clienteRepository.persist(novoCliente);
 
@@ -242,8 +265,44 @@ public class ClienteServiceImpl implements ClienteService {
         novoCliente.setSenha(hashService.getHashSenha(clienteDTO.senha()));
         novoCliente.setPerfil(Perfil.CLIENTE);
 
-        novoCliente.setTelefones(null);
-        novoCliente.setEnderecos(null);
+        if (clienteDTO.listaTelefone() != null && !clienteDTO.listaTelefone().isEmpty()) {
+            List<Telefone> telefones = clienteDTO.listaTelefone().stream()
+                    .map(telDTO -> {
+                        Telefone telefone = new Telefone();
+                        telefone.setCodArea(telDTO.codArea());
+                        telefone.setNumero(telDTO.numero());
+                        telefone.setCliente(novoCliente); // Associa o telefone ao novo cliente
+                        return telefone;
+                    })
+                    .collect(Collectors.toList());
+            novoCliente.setTelefones(telefones);
+        }
+
+        if (clienteDTO.listaEndereco() != null && !clienteDTO.listaEndereco().isEmpty()) {
+            List<Endereco> enderecos = clienteDTO.listaEndereco().stream()
+                    .map(endDTO -> {
+                        Endereco endereco = new Endereco();
+                        endereco.setLogradouro(endDTO.logradouro());
+                        endereco.setNumero(endDTO.numero());
+                        endereco.setComplemento(endDTO.complemento());
+                        endereco.setBairro(endDTO.bairro());
+                        endereco.setCep(endDTO.cep());
+
+                        Municipio municipio = municipioRepository.findById(endDTO.idMunicipio());
+                        if (municipio == null) {
+                            throw new EntityNotFoundException(
+                                    "Município com ID " + endDTO.idMunicipio() + " não encontrado.");
+                        }
+                        endereco.setMunicipio(municipio);
+
+                        endereco.setCliente(novoCliente);
+                        return endereco;
+                    })
+                    .collect(Collectors.toList());
+            novoCliente.setEnderecos(enderecos);
+        }
+
+        // --- FIM DA LÓGICA CORRIGIDA ---
 
         clienteRepository.persist(novoCliente);
 
@@ -263,5 +322,20 @@ public class ClienteServiceImpl implements ClienteService {
         return ClienteResponseDTO.valueOf(cliente);
     }
 
-}
+    @Override
+    public List<EnderecoResponseDTO> findEnderecosByEmail(String email) {
+        Cliente cliente = clienteRepository.findByEmail(email);
+        if (cliente == null) {
+            throw new EntityNotFoundException("Cliente não encontrado para o email: " + email);
+        }
 
+        if (cliente.getEnderecos() == null || cliente.getEnderecos().isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return cliente.getEnderecos().stream()
+                .map(EnderecoResponseDTO::valueOf)
+                .collect(Collectors.toList());
+    }
+
+}

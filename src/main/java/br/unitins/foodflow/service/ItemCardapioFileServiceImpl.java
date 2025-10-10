@@ -31,13 +31,11 @@ public class ItemCardapioFileServiceImpl implements FileService {
         ItemCardapio itemCardapio = itemCardapioRepository.findById(id);
 
         try {
-            // Verifica se o diretório de upload existe
             File diretorio = new File(PATH_UPLOAD);
             if (!diretorio.exists()) {
                 diretorio.mkdirs();
             }
 
-            // Se já existe uma imagem, deleta a antiga
             if (itemCardapio.getNomeImagem() != null && !itemCardapio.getNomeImagem().isEmpty()) {
                 File arquivoAntigo = new File(PATH_UPLOAD + itemCardapio.getNomeImagem());
                 if (arquivoAntigo.exists()) {
@@ -45,7 +43,6 @@ public class ItemCardapioFileServiceImpl implements FileService {
                 }
             }
 
-            // Salva a nova imagem
             String novoNome = gerarNomeUnico(nomeImagem);
             Path destino = Paths.get(PATH_UPLOAD + novoNome);
             Files.write(destino, imagem);
@@ -67,18 +64,15 @@ public class ItemCardapioFileServiceImpl implements FileService {
     public File download(String nomeArquivo) {
         File file = new File(PATH_UPLOAD + nomeArquivo);
         if (!file.exists()) {
-            // Caso a imagem não exista no diretório de upload, tenta carregar do resources
             try (InputStream in = Thread.currentThread()
                     .getContextClassLoader()
                     .getResourceAsStream("images/" + nomeArquivo)) {
                 
                 if (in != null) {
-                    // Copia do resources para o diretório de upload
                     Files.copy(in, Paths.get(PATH_UPLOAD + nomeArquivo), StandardCopyOption.REPLACE_EXISTING);
                     return new File(PATH_UPLOAD + nomeArquivo);
                 }
             } catch (IOException e) {
-                // Se não encontrar em nenhum lugar, retorna null ou uma imagem padrão
                 return null;
             }
         }

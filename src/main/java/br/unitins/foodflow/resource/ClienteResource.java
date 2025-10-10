@@ -9,6 +9,7 @@ import br.unitins.foodflow.application.Result;
 import br.unitins.foodflow.dto.ClienteDTO;
 import br.unitins.foodflow.dto.ClienteResponseDTO;
 import br.unitins.foodflow.dto.ClienteUpdateDTO;
+import br.unitins.foodflow.dto.EnderecoResponseDTO;
 import br.unitins.foodflow.dto.PaginacaoResponse;
 import br.unitins.foodflow.model.Cliente;
 import br.unitins.foodflow.repository.ClienteRepository;
@@ -111,7 +112,7 @@ public class ClienteResource {
     }
 
     @GET
-    //@RolesAllowed({ "Admin" })
+    @RolesAllowed({ "Admin" })
     public PaginacaoResponse<ClienteResponseDTO> buscarTodos(
             @QueryParam("page") @DefaultValue("0") int page,
             @QueryParam("page_size") @DefaultValue("10") int pageSize) {
@@ -171,6 +172,23 @@ public class ClienteResource {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Erro ao atualizar senha: " + e.getMessage())
                     .build();
+        }
+    }
+
+    @GET
+    @Path("/meus-enderecos")
+    @RolesAllowed({ "Cliente" })
+    public Response getMeusEnderecos() {
+        String login = jwt.getSubject();
+        if (login == null) {
+            return Response.status(Status.UNAUTHORIZED).build();
+        }
+
+        try {
+            List<EnderecoResponseDTO> enderecos = service.findEnderecosByEmail(login);
+            return Response.ok(enderecos).build();
+        } catch (EntityNotFoundException e) {
+            return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 

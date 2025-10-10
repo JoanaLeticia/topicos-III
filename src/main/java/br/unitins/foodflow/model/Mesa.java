@@ -3,16 +3,23 @@ package br.unitins.foodflow.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "mesas")
-public class Mesa extends PanacheEntity {
+public class Mesa {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private Integer numero;
     private Integer capacidade;
+    private Boolean disponivel;
 
     @OneToMany(mappedBy = "mesa")
     private List<Reserva> reservas = new ArrayList<>();
@@ -39,5 +46,21 @@ public class Mesa extends PanacheEntity {
 
     public void setReservas(List<Reserva> reservas) {
         this.reservas = reservas;
+    }
+
+    public Boolean getDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(Boolean disponivel) {
+        this.disponivel = disponivel;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

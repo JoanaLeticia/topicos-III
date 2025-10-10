@@ -217,4 +217,18 @@ public class PedidoResource {
             return false;
         }
     }
+
+    @GET
+    @Path("/meus-pedidos")
+    @RolesAllowed({ "Cliente" })
+    public Response getMeusPedidos() {
+        String login = jwt.getSubject();
+
+        try {
+            List<PedidoResponseDTO> pedidos = service.findByClienteEmail(login);
+            return Response.ok(pedidos).build();
+        } catch (EntityNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+        }
+    }
 }

@@ -28,7 +28,7 @@ public record ItemCardapioResponseDTO(
             : null;
 
         return new ItemCardapioResponseDTO(
-                item.id,
+                item.getId(),
                 item.getNome(),
                 item.getDescricao(),
                 item.getPrecoBase(),

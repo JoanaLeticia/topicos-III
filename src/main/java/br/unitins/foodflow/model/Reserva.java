@@ -2,18 +2,24 @@ package br.unitins.foodflow.model;
 
 import java.time.LocalDateTime;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "reservas")
-public class Reserva extends PanacheEntity {
+public class Reserva {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "usuario_id", nullable = true)
     private Usuario usuario;
 
     @ManyToOne
@@ -28,6 +34,15 @@ public class Reserva extends PanacheEntity {
 
     @Column(name = "codigo_confirmacao")
     private String codigoConfirmacao;
+
+    @Column(name = "nome_convidado")
+    private String nomeConvidado;
+
+    @Column(name = "email_convidado")
+    private String emailConvidado;
+
+    @Column(name = "telefone_convidado")
+    private String telefoneConvidado;
 
     public Usuario getUsuario() {
         return usuario;
@@ -67,6 +82,38 @@ public class Reserva extends PanacheEntity {
 
     public void setCodigoConfirmacao(String codigoConfirmacao) {
         this.codigoConfirmacao = codigoConfirmacao;
+    }
+
+    public String getNomeConvidado() {
+        return nomeConvidado;
+    }
+
+    public void setNomeConvidado(String nomeConvidado) {
+        this.nomeConvidado = nomeConvidado;
+    }
+
+    public String getEmailConvidado() {
+        return emailConvidado;
+    }
+
+    public void setEmailConvidado(String emailConvidado) {
+        this.emailConvidado = emailConvidado;
+    }
+
+    public String getTelefoneConvidado() {
+        return telefoneConvidado;
+    }
+
+    public void setTelefoneConvidado(String telefoneConvidado) {
+        this.telefoneConvidado = telefoneConvidado;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

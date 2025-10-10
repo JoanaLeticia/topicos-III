@@ -16,7 +16,7 @@ public class AtendimentoDeliveryProprio extends Atendimento {
     private Endereco enderecoEntrega;
 
     @Column(name = "taxa_entrega")
-    private BigDecimal taxaEntrega = new BigDecimal("5.00"); // Taxa fixa
+    private BigDecimal taxaEntrega = new BigDecimal("5.00");
 
     @Override
     public BigDecimal calcularTaxa() {

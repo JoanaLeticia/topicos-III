@@ -21,4 +21,5 @@ public interface PedidoService {
     long countByClienteId(Long clienteId);
     long countByStatus(StatusPedido status);
     PedidoResponseDTO findLastByUser(String email);
+    List<PedidoResponseDTO> findByClienteEmail(String email);
 }

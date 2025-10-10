@@ -4,30 +4,34 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "parceiros_app")
-public class ParceiroApp extends PanacheEntity {
+public class ParceiroApp {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String nome;
 
     @Column(nullable = false, name = "percentual_comissao")
-    private BigDecimal percentualComissao; // ex: 15 (para 15%)
+    private BigDecimal percentualComissao;
 
     @Column(name = "taxa_fixa")
-    private BigDecimal taxaFixa; // Opcional
+    private BigDecimal taxaFixa;
 
     @OneToMany(mappedBy = "parceiro")
     private List<AtendimentoDeliveryAplicativo> atendimentos = new ArrayList<>();
 
     public BigDecimal calcularTaxa() {
-        // Você pode implementar lógica mais complexa aqui
         return taxaFixa != null ? taxaFixa : new BigDecimal("3.00");
     }
 
@@ -63,5 +67,12 @@ public class ParceiroApp extends PanacheEntity {
         this.atendimentos = atendimentos;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
 }

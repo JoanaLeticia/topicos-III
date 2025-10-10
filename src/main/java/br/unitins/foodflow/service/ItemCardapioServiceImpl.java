@@ -173,7 +173,7 @@ public class ItemCardapioServiceImpl implements ItemCardapioService {
 
         return itemList.stream()
                 .map(item -> {
-                    boolean isSugestao = item.id.equals(idSugestaoAlmoco) || item.id.equals(idSugestaoJantar);
+                    boolean isSugestao = item.getId().equals(idSugestaoAlmoco) || item.getId().equals(idSugestaoJantar);
                     return ItemCardapioResponseDTO.valueOf(item, isSugestao);
                 })
                 .collect(Collectors.toList());
@@ -195,13 +195,10 @@ public class ItemCardapioServiceImpl implements ItemCardapioService {
             String sort,
             Double precoMax) {
 
-        // Obter período usando método auxiliar (retorna final)
         final TipoPeriodo periodo = obterPeriodo(nomePeriodo);
 
-        // Determinar ordenação
         String orderBy = (sort != null && !sort.isEmpty()) ? sort : "nome ASC";
 
-        // Construir query com filtros
         PanacheQuery<ItemCardapio> query;
 
         if (precoMax != null) {
@@ -215,15 +212,12 @@ public class ItemCardapioServiceImpl implements ItemCardapioService {
                     periodo);
         }
 
-        // Aplicar paginação se necessário
         if (size > 0) {
             query = query.page(page, size);
         }
 
-        // Obter sugestão ativa para marcar itens com desconto
         SugestaoChefe sugestaoAtiva = sugestaoRepository.findSugestaoAtiva();
 
-        // Mapear itens para DTO
         return query.list().stream()
                 .map(item -> {
                     boolean isSugestao = (sugestaoAtiva != null)
@@ -233,13 +227,6 @@ public class ItemCardapioServiceImpl implements ItemCardapioService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Método auxiliar para converter string/número em TipoPeriodo
-     * 
-     * @param nomePeriodo pode ser "1", "2", "ALMOCO", "JANTAR", "Almoço", "Jantar"
-     * @return TipoPeriodo correspondente
-     * @throws BadRequestException se o período for inválido
-     */
     private TipoPeriodo obterPeriodo(String nomePeriodo) {
         if (nomePeriodo == null || nomePeriodo.trim().isEmpty()) {
             throw new BadRequestException("Período não pode ser vazio");
@@ -292,13 +279,10 @@ public class ItemCardapioServiceImpl implements ItemCardapioService {
         try {
             TipoPeriodo periodo = TipoPeriodo.valueOf(nomePeriodo.toUpperCase());
 
-            // Obter faixas de preço (usando a implementação dinâmica que criamos)
             List<Double> faixasPreco = itemRepository.findItemPrecoByPeriodo(periodo);
 
-            // Adicionar ao mapa de filtros
             filtros.put("faixasPreco", faixasPreco);
 
-            // Opcional: adicionar estatísticas úteis
             filtros.put("quantidadeProdutos", itemRepository.countByPeriodo(periodo));
 
         } catch (IllegalArgumentException e) {

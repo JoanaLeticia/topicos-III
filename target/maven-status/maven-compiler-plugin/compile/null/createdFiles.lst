@@ -82,6 +82,7 @@ br\unitins\foodflow\dto\ItemCardapioResponseDTO.class
 br\unitins\foodflow\resource\ClienteResource.class
 br\unitins\foodflow\service\ClienteService.class
 br\unitins\foodflow\service\EnderecoService.class
+br\unitins\foodflow\dto\DisponibilidadeMesaResponse.class
 br\unitins\foodflow\dto\PedidoResponseDTO.class
 br\unitins\foodflow\repository\AtendimentoRepository.class
 br\unitins\foodflow\repository\AdministradorRepository.class
@@ -114,6 +115,7 @@ br\unitins\foodflow\model\Telefone.class
 br\unitins\foodflow\dto\ClienteResponseDTO.class
 br\unitins\foodflow\model\AtendimentoDeliveryProprio.class
 br\unitins\foodflow\dto\EstadoResponseDTO.class
+br\unitins\foodflow\dto\ReservaConvidadoDTO.class
 br\unitins\foodflow\dto\AdministradorDTO.class
 br\unitins\foodflow\service\HashServiceImpl.class
 br\unitins\foodflow\service\RelatorioServiceImpl.class

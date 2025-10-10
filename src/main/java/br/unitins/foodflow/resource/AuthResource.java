@@ -39,10 +39,9 @@ public class AuthResource {
         String hash = hashService.getHashSenha(dto.senha());
 
         UsuarioResponseDTO usuario = null;
-        // administrador
         if (dto.perfil() == Perfil.ADMIN) {
             usuario = administradorService.login(dto.login(), hash);
-        } else if (dto.perfil() == Perfil.CLIENTE) { // cliente
+        } else if (dto.perfil() == Perfil.CLIENTE) {
             usuario = clienteService.login(dto.login(), hash);
         } else {
             return Response.status(Status.NOT_FOUND).build();
@@ -63,13 +62,11 @@ public class AuthResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registrar(ClienteDTO clienteDTO) {
         try {
-            // Validação básica (opcional)
             if (clienteDTO.email() == null || clienteDTO.senha() == null) {
                 return Response.status(Status.BAD_REQUEST)
                         .entity("Email e senha são obrigatórios").build();
             }
 
-            // Delega para o serviço de autenticação
             UsuarioResponseDTO usuarioRegistrado = clienteService.registrar(clienteDTO);
 
             return Response.status(Status.CREATED)

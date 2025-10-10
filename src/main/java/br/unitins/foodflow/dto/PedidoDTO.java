@@ -16,8 +16,8 @@ public record PedidoDTO(
         @NotNull(message = "O campo tipo de atendimento não pode ser nulo.") 
         Integer idTipoAtendimento, // 1=PRESENCIAL, 2=DELIVERY_PROPRIO, 3=DELIVERY_APLICATIVO
         
-        // Campos específicos por tipo de atendimento
-        Integer numeroMesa, // Para PRESENCIAL
-        Long idEndereco, // Para DELIVERY
-        Long idParceiro // Para DELIVERY_APLICATIVO
+        Integer numeroMesa,
+        String nomeRetirada,
+        Long idEndereco,
+        Long idParceiro
 ) {}
